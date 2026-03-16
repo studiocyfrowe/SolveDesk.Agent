@@ -5,7 +5,7 @@ from api.routes.router import router as diagnose_router
 
 app = FastAPI(
     title="SolveDesk Agent API",
-    description="API do inteligentnego wyszukiwania i analizy podobnych zgłoszeń przy użyciu modeli BERT",
+    description="API agenta diagnostycznego systemu operacyjnego zbierającego dane o wydajności stacji roboczej (CPU, RAM, dysk, procesy) oraz wykorzystującego lokalny model LLM (Ollama / Qwen) do analizy i automatycznej diagnostyki problemów.",
     version="1.01.001"
 )
 
