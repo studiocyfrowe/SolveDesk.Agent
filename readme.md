@@ -162,6 +162,7 @@ Agent może być używany w różnych scenariuszach:
 # Integracja z Lumos
 
 Przykład integracji z projektem Lumos - usługą systemową Windows magazynującą informację o wydajności stacji.
+ConnectionString odpowiada ścieżce bezwzględnej do pliku lokalnego .db.
 
 ```python
 
