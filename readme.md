@@ -159,6 +159,34 @@ Agent może być używany w różnych scenariuszach:
 
 ![cmd test](image.png)
 
+# Integracja z Lumos
+
+Przykład integracji z projektem Lumos - usługą systemową Windows magazynującą informację o wydajności stacji.
+
+```python
+
+def fetch_memory_ram_scan(self):
+        query = text("""SELECT 
+            AVG(TotalGB)     AS AvgTotalGB,
+            AVG(UsedGB)      AS AvgUsedGB,
+            AVG(FreeGB)      AS AvgFreeGB,
+            AVG(UsedPercent) AS AvgUsedPercent
+        FROM MemoryRamScans""")
+
+        with self.engine.connect() as conn:
+            result = conn.execute(query)
+            rows = result.fetchall()
+
+        return [dict(row._mapping) for row in rows]
+
+```
+
+```json
+
+{"type": "observation", "content": {"tool": "check_ram_usage", "result": [{"AvgTotalGB": 15.720000000001031, "AvgUsedGB": 10.102186288332874, "AvgFreeGB": 5.6178137116672575, "AvgUsedPercent": 64.26475149806092}]}}
+
+```
+
 # Integracja z AI / SolveDesk
 
 Agent może być wykorzystywany przez systemy AI do automatycznej diagnostyki problemów zgłaszanych przez użytkowników.
@@ -196,6 +224,4 @@ Planowane rozszerzenia:
 
 ---
 
-# Licencja
-
-MIT
+Dominik Hofman

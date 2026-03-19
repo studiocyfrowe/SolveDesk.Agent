@@ -1,4 +1,5 @@
 from application.tools.diagnose_service import DiagnoseService
+from application.tools.lumos_loader import LumosLoader
 from application.helpers.model_calling import ModelCalling
 from application.helpers.tool_registry import ToolRegistry
 from application.helpers.executor import Executor
@@ -18,8 +19,12 @@ def get_model_calling():
 def get_diagnose_service():
     return DiagnoseService()
 
+def get_lumos_loader():
+    return LumosLoader()
+
 def get_tool_registry(
-    service: DiagnoseService = Depends(get_diagnose_service)
+    service: DiagnoseService = Depends(get_diagnose_service),
+    lumos_loader: LumosLoader = Depends(get_lumos_loader)
 ):
     registry = ToolRegistry()
 
@@ -31,7 +36,7 @@ def get_tool_registry(
 
     registry.register(
         "check_ram_usage",
-        service.check_ram_usage,
+        lumos_loader.fetch_memory_ram_scan,
         "Check RAM usage"
     )
 
