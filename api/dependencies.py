@@ -48,7 +48,7 @@ def get_tool_registry(
 
     registry.register(
         "top_processes",
-        service.top_processes,
+        lumos_loader.fetch_processes_scan,
         "Show top CPU consuming processes"
     )
 
