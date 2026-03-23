@@ -8,6 +8,7 @@ from application.helpers.summarizer import Summarizer
 from fastapi import Depends
 from application.workflows.diagnose_workflow import DiagnoseWorkflow
 from api.controllers.diagnose_controller import DiagnoseController
+from api.controllers.statistics_controller import StatisticsController
 
 URL = "http://localhost:11434/api/chat"
 MODEL_NAME = "qwen2.5:3b"
@@ -30,7 +31,7 @@ def get_tool_registry(
 
     registry.register(
         "check_cpu_usage",
-        service.check_cpu_usage,
+        lumos_loader.fetch_cpu_scan,
         "Check current CPU usage"
     )
 
@@ -86,3 +87,9 @@ def get_diagnose_controller(
     workflow: DiagnoseWorkflow = Depends(get_workflow)
 ):
     return DiagnoseController(workflow=workflow)
+
+def get_stats_controller(
+    loader: LumosLoader = Depends(get_lumos_loader)
+):
+    return StatisticsController(loader=loader)
+    

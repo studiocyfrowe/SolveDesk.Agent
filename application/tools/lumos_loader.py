@@ -41,3 +41,23 @@ class LumosLoader:
             rows = result.fetchall()
 
         return [dict(row._mapping) for row in rows]
+
+    def fetch_cpu_scan(self):
+        query = text("""SELECT 
+            Id, 
+            MachineGuid, 
+            Name, 
+            NumberOfCores, 
+            NumberOfLogicalProcessors, 
+            MaxClockSpeedMHz, 
+            LoadPercent, 
+            DeviceName, 
+            LastScan
+        FROM ProcessorCPUs
+        ORDER BY LastScan DESC;""")
+
+        with self.engine.connect() as conn:
+            result = conn.execute(query)
+            rows = result.fetchall()
+
+        return [dict(row._mapping) for row in rows]
