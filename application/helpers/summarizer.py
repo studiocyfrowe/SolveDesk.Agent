@@ -6,15 +6,17 @@ class Summarizer:
 
     def get_summarize(self, problem, results):
         prompt = f"""
-            Jesteś asystentem administratora IT.
-            Problem użytkownika:
+            You are an IT administrator assistant.
+            User problem:
+
             {problem}
 
-            Wyniki diagnostyki:
+            Diagnostic results:
 
             {json.dumps(results, indent=2)}
 
-            Podsumuj przyczynę problemu dla informatyka.
+            Summarize the cause of the problem for the IT specialist.
+
         """
 
         response = self.model_calling.call_model(prompt)

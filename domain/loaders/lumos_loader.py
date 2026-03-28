@@ -1,7 +1,10 @@
-import os
-import pandas as pd
 from pandas import DataFrame
+import pandas as pd
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
+import os
+
+load_dotenv()
 
 class LumosLoader:
     def __init__(self):
@@ -17,3 +20,5 @@ class LumosLoader:
             raise ValueError("No SQL query provided")
 
         return pd.read_sql(query, self.engine)
+        
+

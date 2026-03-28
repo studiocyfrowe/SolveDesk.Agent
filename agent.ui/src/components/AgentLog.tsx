@@ -25,6 +25,24 @@ const AgentLog: React.FC<AgentLogProps> = ({ base, icon, log }) => {
                     </div>
                 )}
 
+                {"plan" in log && Array.isArray(log.plan) && (
+                    <div>
+                        <span className="text-blue-300 font-medium mr-1">
+                            Plan:
+                        </span>
+
+                        <ul className="list-disc ml-5 space-y-1">
+                            {log.plan.map((step, i) => (
+                                <li key={i} className="break-words">
+                                    {typeof step === "string"
+                                        ? step
+                                        : JSON.stringify(step, null, 2)}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
                 {"content" in log && (
                     <div className="whitespace-pre-wrap break-words font-mono text-sm bg-black rounded-sm px-4 py-3">
                         {typeof log.content === "string"

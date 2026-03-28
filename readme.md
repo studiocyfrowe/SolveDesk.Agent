@@ -131,16 +131,13 @@ Przykładowy wynik:
 
 Badanie
 ```json
-{"type": "plan", "content": ["check_cpu_usage", "check_ram_usage", "check_disk_space", "top_processes"]}
-{"type": "observation", "content": {"tool": "check_cpu_usage", "result": {"cpu_usage_percent": 48.8}}}
-{"type": "observation", "content": {"tool": "check_ram_usage", "result": [{"AvgTotalGB": 15.72000000000002, "AvgUsedGB": 13.672333333333336, "AvgFreeGB": 2.047666666666667, "AvgUsedPercent": 86.97166666666665}]}}
-{"type": "observation", "content": {"tool": "check_disk_space", "result": {"disk_total_gb": 237.76, "disk_used_percent": 96.5}}}
-{"type": "observation", "content": {"tool": "top_processes", "result": [{"Id": 1724, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 1004.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:39:59.6067664"}, {"Id": 1441, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 957.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:39:24.7200238"}, {"Id": 25, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 949.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:36:44.3885368"}, {"Id": 309, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 949.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:37:16.0901868"}, {"Id": 592, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 949.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:37:46.9104436"}, {"Id": 875, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 949.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:38:18.6411362"}, {"Id": 1158, "MachineGuid": "<PC_NAME>", "ProcessId": 10028, "ProcessName": "devenv", "MemoryUsageMB": 949.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-21T15:43:04.1456354+01:00", "LastScan": "2026-03-22 10:38:51.3447019"}, {"Id": 9066, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 902.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:57:26.4448836"}, {"Id": 9349, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 902.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:58:00.5804277"}, {"Id": 8783, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 881.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:54:37.6199807"}, {"Id": 8503, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 862.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:53:59.862154"}, {"Id": 8224, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 816.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:53:22.4794512"}, {"Id": 7945, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 801.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:52:46.1050987"}, {"Id": 7387, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 796.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:51:34.3226447"}, {"Id": 7666, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 796.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:52:12.3339674"}, {"Id": 12970, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 787.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:06:19.8066768"}, {"Id": 13203, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 784.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:06:57.4461033"}, {"Id": 7108, "MachineGuid": "<PC_NAME>", "ProcessId": 20896, "ProcessName": "devenv", "MemoryUsageMB": 783.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T10:50:06.3571166+01:00", "LastScan": "2026-03-22 10:51:01.2468834"}, {"Id": 13463, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 691.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:07:33.7871848"}, {"Id": 10886, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 664.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:01:34.3499958"}, {"Id": 11147, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 644.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:02:08.9194291"}, {"Id": 11409, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 644.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:02:42.988393"}, {"Id": 12711, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 602.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:05:41.6877386"}, {"Id": 11645, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 565.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:03:16.2944533"}, {"Id": 12452, "MachineGuid": "<PC_NAME>", "ProcessId": 11880, "ProcessName": "Code", "MemoryUsageMB": 527.0, "CpuUsagePercent": 0.0, "StartTime": "2026-03-22T11:01:03.8549193+01:00", "LastScan": "2026-03-22 11:05:04.8311821"}]}}
+{"type": "plan", "content": ["top_processes"]}
+{"type": "observation", "content": {"tool": "top_processes", "result": {"top_processes": [{"ram_mean": 890.3125, "ram_max": 1004.0}, {"ram_mean": 312.7647058823529, "ram_max": 322.0}, {"ram_mean": 289.5351111111111, "ram_max": 387.0}, {"ram_mean": 211.1875, "ram_max": 265.0}, {"ram_mean": 193.94117647058823, "ram_max": 225.0}], "system": {"ram_avg": 22.74}, "issues": ["Single process dominates CPU", "Possible memory leak"]}}}
 ```
 
 Diagnoza
 ```json
-{"type": "summary", "content": "Podsumowanie wydajno\u015bci komputera na podstawie obserwowanych wynik\u00f3w diagnostycznych powinno pom\u00f3c informatykom w postaci wskazania, kt\u00f3re mog\u0105 by\u0107 zwi\u0105zane z problemem. Oto niekt\u00f3re podej\u015bcia do analizy:\n\n### 1. **Wysoki warto\u015bci CPU (Czas wykonania procesor\u00f3w)**:\n   - Poni\u017csza lista pokazuje, \u017ce wi\u0119kszo\u015b\u0107 proces\u00f3w dzia\u0142a na niskich wydajno\u015bciach CPU (~0-2%), ale kilka proces\u00f3w ma wy\u017cej napi\u0119cia CPU, co mo\u017ce by\u0107 zwi\u0105zane z du\u017c\u0105 obci\u0105\u017ceniem komputera.\n   \n   **Prawda:** Najpierw sprawd\u017a, kt\u00f3re procesy maj\u0105 wysokie warto\u015bci CPU. Mo\u017cliwe \u017ce one s\u0105 nadmiernie wykorzystywane przez aplikacje, kt\u00f3rych nie trzeba uruchamia\u0107.\n\n### 2. **Wysoki warto\u015bci RAM [...] konieczne zmniejszenie u\u017cycia plik\u00f3w.\n3. **Sprawd\u017a procesy**: Upewnij si\u0119, \u017ce nie s\u0105 nadmiernie wykorzystywane przez niekt\u00f3re aplikacje lub procesy.\n\n### Wniosek:\nWystarczy to og\u00f3lnie, aby pom\u00f3c w identyfikacji problemu. Warto upewni\u0107 si\u0119, \u017ce wszystkie te punkty s\u0105 odpowiednio zaktualizowane i sprawdzone. Dalsze kroki zale\u017c\u0105 od kontekstu konkretnego problemu i wynik\u00f3w obserwacji."}
+{"type": "summary", "content": "Problem z uruchamianiem komputera mo\u017ce by\u0107 skierowany do kilku czynnik\u00f3w, pod kt\u00f3re warto skupi\u0107 uwag\u0119. Oto podsumowanie:\n\n1. **Dominuj\u0105ca procedura procesora**: Wystarczaj\u0105co du\u017co pami\u0119ci (w tym maksymalnej 1004 MB) jest zmuszona do pracy przez jeden proces. Ta dominantna procedura mo\u017ce by\u0107 konkretnie okre\u015blana za pomoc\u0105 narz\u0119dzia `top_processes`, kt\u00f3re pokazuje, \u017ce jedna z tych procedur (prawdopodobnie uruchamiana aplikacja lub serwer) monopolizuje du\u017ce procent CPU.\n\n2. **Leki pami\u0119ci**: Wykryto potencjalne problemy ze strukturami pami\u0119ci \u2013 czyli mo\u017cliwe problemy zwi\u0105zane z leakem pami\u0119ci. Mo\u017ce by\u0107, \u017ce istnieje nieobslugiwany obiekt w pami\u0119ci, kt\u00f3ry spowodowa\u0142by trzymanie wi\u0119cej pami\u0119ci ni\u017c pozwala na to normale.\n\nPodsumowuj\u0105c, g\u0142\u00f3wn\u0105 przyczyn\u0105 tego problemu mo\u017ce by\u0107 dominuj\u0105ca procedura procesora, co prowadzi do monopolizacji du\u017cych procent CPU. Warto wi\u0119c skupi\u0107 si\u0119 na monitorowaniu obci\u0105\u017ce\u0144 i uruchamianych aplikacji, aby wskaza\u0107, kt\u00f3ry proces jest odpowiedzialny za maksymalne u\u017cycie prostrowy pami\u0119ci i procesora. Je\u015bli istnieje taka procedura, kt\u00f3ra monopolizuje du\u017ce liczby prostrowy pami\u0119ci (tj. > 50% CPU i > 1 GB RAM), to mo\u017ce by\u0107 to zazwyczaj odpowiedzialna za problem dzia\u0142a\u0144 wykraczaj\u0105cych na systemu.\n\nWa\u017cne jest r\u00f3wnie\u017c skupienie si\u0119 na sprawdzeniu struktur pami\u0119ci aplikacji i serwer\u00f3w, aby potencjalnie odnale\u017a\u0107 przyczyn\u0119 leaku pami\u0119ci."}
 ```
 
 ---
@@ -161,30 +158,86 @@ Agent może być używany w różnych scenariuszach:
 
 # Integracja z Lumos
 
-Przykład integracji z projektem Lumos - usługą systemową Windows magazynującą informację o wydajności stacji.
-ConnectionString odpowiada ścieżce bezwzględnej do pliku lokalnego .db.
+Przykład integracji z projektem Lumos – usługą systemową Windows odpowiedzialną za gromadzenie informacji o wydajności stacji roboczej.
+
+ConnectionString wskazuje bezwzględną ścieżkę do lokalnego pliku bazy danych .db.
+
+W przedstawionym scenariuszu analizowane są aktywne procesy. Dane są pobierane z bazy i ładowane do obiektu DataFrame (biblioteka pandas), który stanowi warstwę analityczną aplikacji. Następnie, przy użyciu operacji grupowania i sortowania, wyznaczane są tzw. top procesy – na podstawie średniego oraz maksymalnego zużycia pamięci RAM.
+
+Metoda detect_issues identyfikuje potencjalne problemy i zapisuje je w postaci krótkich komunikatów. Pełnią one rolę dodatkowego kontekstu dla modelu LLM, ułatwiając interpretację wyników.
+
+Na końcu budowany jest ustrukturyzowany payload zawierający wyselekcjonowane metryki i wnioski, który trafia do modelu językowego w celu dalszej analizy i generowania rekomendacji.
 
 ```python
 
-def fetch_memory_ram_scan(self):
-        query = text("""SELECT 
-            AVG(TotalGB)     AS AvgTotalGB,
-            AVG(UsedGB)      AS AvgUsedGB,
-            AVG(FreeGB)      AS AvgFreeGB,
-            AVG(UsedPercent) AS AvgUsedPercent
-        FROM MemoryRamScans""")
+from pandas import DataFrame
+from domain.abstracts.process_analysis_service import ProcessAnalysisService
 
-        with self.engine.connect() as conn:
-            result = conn.execute(query)
-            rows = result.fetchall()
+class TopProcessesAnalitycs(ProcessAnalysisService):
+    def __init__(self, loader):
+        self.loader = loader
 
-        return [dict(row._mapping) for row in rows]
+    def load_process_data(self) -> DataFrame:
+        query = """SELECT 
+            MachineGuid, 
+            ProcessId, 
+            ProcessName, 
+            MemoryUsageMB, 
+            CpuUsagePercent, 
+            StartTime, 
+            LastScan
+        FROM Processes"""
+
+        loaded_data = self.loader.read_data(query)
+        return loaded_data
+    
+
+    def analyze_top_processes(self, df: DataFrame) -> DataFrame:
+        grouped = df.groupby('ProcessName').agg({
+            "MemoryUsageMB": ['mean', 'max']
+        })
+
+        grouped.columns = ['ram_mean', 'ram_max']
+        grouped.reset_index()
+
+        top_processes = grouped.sort_values(
+            by=['ram_mean', 'ram_max'],
+            ascending=[False, False]
+        ).head()
+
+        return top_processes, grouped
+    
+
+    def detect_issues(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
+        issues = []
+        if top_processes.iloc[0]['ram_mean'] > 50:
+            issues.append('Single process dominates CPU')
+
+        if df['CpuUsagePercent'].mean() > 80:
+            issues.append('High overall CPU usage')
+
+        if grouped['ram_max'].max() > 2000:
+            issues.append('Possible memory leak')
+
+        return issues
+    
+
+    def build_llm_payload(self, top_processes: DataFrame, df: DataFrame, issues: list) -> dict:
+        payload = {
+            'top_processes': top_processes.to_dict(orient='records'),
+            'system': {
+                'ram_avg': df['MemoryUsageMB'].mean().round(2)
+            },
+            'issues': issues
+        }
+
+        return payload
 
 ```
 
 ```json
 
-{"type": "observation", "content": {"tool": "check_ram_usage", "result": [{"AvgTotalGB": 15.720000000001031, "AvgUsedGB": 10.102186288332874, "AvgFreeGB": 5.6178137116672575, "AvgUsedPercent": 64.26475149806092}]}}
+{"type": "observation", "content": {"tool": "top_processes", "result": {"top_processes": [{"ram_mean": 890.3125, "ram_max": 1004.0}, {"ram_mean": 312.7647058823529, "ram_max": 322.0}, {"ram_mean": 289.5351111111111, "ram_max": 387.0}, {"ram_mean": 211.1875, "ram_max": 265.0}, {"ram_mean": 193.94117647058823, "ram_max": 225.0}], "system": {"ram_avg": 22.74}, "issues": ["Single process dominates CPU", "Possible memory leak"]}}}
 
 ```
 
@@ -212,6 +265,12 @@ Rekomendacja: zamknąć nieużywane karty przeglądarki.
 ```
 
 ---
+
+# Zrzuty ekranu
+
+!['Running'](image-2.png)
+
+!['result'](image-3.png)
 
 # Roadmap
 
