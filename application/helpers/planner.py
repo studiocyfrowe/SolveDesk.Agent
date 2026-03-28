@@ -21,9 +21,9 @@ class Planner:
             Zwróć plan diagnostyczny w JSON:
 
             {{
-            "plan": [
-            "tool_name"
-            ]
+                "plan": [
+                    "tool_name"
+                ]
             }}
 
             Używaj tylko dostępnych narzędzi.

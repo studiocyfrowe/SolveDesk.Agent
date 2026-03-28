@@ -14,33 +14,6 @@ const Navigation = () => {
                     />
                 )}
             </NavLink>
-            <NavLink to="/cpu-details">
-                {({ isActive }) => (
-                    <SidebarItem
-                        icon={faMicrochip}
-                        label="CPU"
-                        active={isActive}
-                    />
-                )}
-            </NavLink>
-            <NavLink to="/memory">
-                {({ isActive }) => (
-                    <SidebarItem
-                        icon={faMemory}
-                        label="Memory"
-                        active={isActive}
-                    />
-                )}
-            </NavLink>
-            <NavLink to="/settings">
-                {({ isActive }) => (
-                    <SidebarItem
-                        icon={faGear}
-                        label="Settings"
-                        active={isActive}
-                    />
-                )}
-            </NavLink>
         </nav>
     )
 }

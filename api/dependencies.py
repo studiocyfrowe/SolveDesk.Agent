@@ -1,5 +1,5 @@
 from application.tools.diagnose_service import DiagnoseService
-from application.tools.lumos_loader import LumosLoader
+from domain.loaders.lumos_loader import LumosLoader
 from application.helpers.model_calling import ModelCalling
 from application.helpers.tool_registry import ToolRegistry
 from application.helpers.executor import Executor
@@ -9,6 +9,8 @@ from fastapi import Depends
 from application.workflows.diagnose_workflow import DiagnoseWorkflow
 from api.controllers.diagnose_controller import DiagnoseController
 from api.controllers.statistics_controller import StatisticsController
+from application.analitycs.top_processes_analitycs import TopProcessesAnalitycs
+from application.workflows.processes_analysis_workflow import ProcessesAnalysisWorkflow
 
 URL = "http://localhost:11434/api/chat"
 MODEL_NAME = "qwen2.5:3b"
@@ -17,39 +19,27 @@ MODEL_NAME = "qwen2.5:3b"
 def get_model_calling():
     return ModelCalling(MODEL_NAME, URL)
 
-def get_diagnose_service():
-    return DiagnoseService()
-
 def get_lumos_loader():
     return LumosLoader()
 
+def get_top_processes_analitycs(
+    loader: LumosLoader = Depends(get_lumos_loader)
+):
+    return TopProcessesAnalitycs(loader=loader)
+
+def get_processes_analysis_workflow(
+    process_analysis: TopProcessesAnalitycs = Depends(get_top_processes_analitycs)
+):
+    return ProcessesAnalysisWorkflow(process_analysis=process_analysis)
+
 def get_tool_registry(
-    service: DiagnoseService = Depends(get_diagnose_service),
-    lumos_loader: LumosLoader = Depends(get_lumos_loader)
+    processes_workflow: ProcessesAnalysisWorkflow = Depends(get_processes_analysis_workflow)
 ):
     registry = ToolRegistry()
 
     registry.register(
-        "check_cpu_usage",
-        lumos_loader.fetch_cpu_scan,
-        "Check current CPU usage"
-    )
-
-    registry.register(
-        "check_ram_usage",
-        lumos_loader.fetch_memory_ram_scan,
-        "Check RAM usage"
-    )
-
-    registry.register(
-        "check_disk_space",
-        service.check_disk_space,
-        "Check disk free space"
-    )
-
-    registry.register(
         "top_processes",
-        lumos_loader.fetch_processes_scan,
+        processes_workflow.execute,
         "Show top CPU consuming processes"
     )
 

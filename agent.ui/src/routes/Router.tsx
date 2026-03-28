@@ -7,14 +7,6 @@ const Router = createBrowserRouter([
     {
         path: "/",
         element: <Home />
-    },
-    {
-        path: "/cpu-details",
-        element: <CpuDetails />
-    },
-    {
-        path: "/processes",
-        element: <Processes />
     }
 ])
 

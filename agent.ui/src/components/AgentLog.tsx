@@ -15,18 +15,22 @@ const AgentLog: React.FC<AgentLogProps> = ({ base, icon, log }) => {
         <div className={`${base} bg-blue-500/10 flex gap-2 items-start`}>
             <FontAwesomeIcon icon={icon} className="mt-1 text-blue-400" />
 
-            <div className="flex-1 space-y-1">
+            <div className="flex-1 min-w-0 space-y-1 break-words">
                 {"tool" in log && (
                     <div>
                         <span className="text-blue-300 font-medium mr-1">
                             Tool:
                         </span>
-                        <span>{log.tool}</span>
+                        <span className="break-words">{log.tool}</span>
                     </div>
                 )}
 
                 {"content" in log && (
-                    <RenderContent content={log.content} />
+                    <div className="whitespace-pre-wrap break-words font-mono text-sm bg-black rounded-sm px-4 py-3">
+                        {typeof log.content === "string"
+                            ? log.content
+                            : JSON.stringify(log.content, null, 2)}
+                    </div>
                 )}
             </div>
         </div>

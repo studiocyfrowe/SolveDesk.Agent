@@ -7,7 +7,8 @@ import {
     faTools,
     faTriangleExclamation,
     faXmark,
-    faPlay
+    faPlay,
+    faBookReader
 } from "@fortawesome/free-solid-svg-icons"
 import MainLayout from "../layouts/MainLayout"
 import RunAgent from "../services/RunAgent"
@@ -51,6 +52,10 @@ const Home: React.FC = () => {
 
                         const base = "p-3 rounded-xl text-sm border border-gray-800"
 
+                        if (log.type === "plan") {
+                            return <AgentLog key={i} base={base} log={log} icon={faBookReader} />
+                        }
+
                         if (log.type === "action") {
                             return <AgentLog key={i} base={base} log={log} icon={faTools} />
                         }
@@ -63,7 +68,7 @@ const Home: React.FC = () => {
                             return <AgentLog key={i} base={base} log={log} icon={faRobot} />
                         }
 
-                        if (log.type === "final_answer") {
+                        if (log.type === "summary") {
                             return <AgentLog key={i} base={base} log={log} icon={faTriangleExclamation} />
                         }
 
