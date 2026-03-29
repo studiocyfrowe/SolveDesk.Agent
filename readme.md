@@ -168,16 +168,42 @@ Metoda detect_issues identyfikuje potencjalne problemy i zapisuje je w postaci k
 
 Na końcu budowany jest ustrukturyzowany payload zawierający wyselekcjonowane metryki i wnioski, który trafia do modelu językowego w celu dalszej analizy i generowania rekomendacji.
 
+!['Analyze workflow'](image-4.png)
+
+```python
+
+from abc import ABC, abstractmethod
+from pandas import DataFrame
+
+class BaseAnalysisService(ABC):
+    @abstractmethod
+    def load_data(self) -> DataFrame:
+        pass
+
+    @abstractmethod
+    def analyze(self, df: DataFrame) -> DataFrame:
+        pass
+
+    @abstractmethod
+    def detect(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
+        pass
+
+    @abstractmethod
+    def build_llm_payload(self, top_processes: DataFrame, df: DataFrame, issues: list) -> dict:
+        pass
+
+```
+
 ```python
 
 from pandas import DataFrame
-from domain.abstracts.process_analysis_service import ProcessAnalysisService
+from domain.abstracts.process_analysis_service import BaseAnalysisService
 
-class TopProcessesAnalitycs(ProcessAnalysisService):
+class TopProcessesAnalitycs(BaseAnalysisService):
     def __init__(self, loader):
         self.loader = loader
 
-    def load_process_data(self) -> DataFrame:
+    def load_data(self) -> DataFrame:
         query = """SELECT 
             MachineGuid, 
             ProcessId, 
@@ -192,23 +218,24 @@ class TopProcessesAnalitycs(ProcessAnalysisService):
         return loaded_data
     
 
-    def analyze_top_processes(self, df: DataFrame) -> DataFrame:
+    def analyze(self, df: DataFrame) -> DataFrame:
         grouped = df.groupby('ProcessName').agg({
-            "MemoryUsageMB": ['mean', 'max']
+            "MemoryUsageMB": ['mean', 'max'],
+            "CpuUsagePercent": ['mean', 'max']
         })
 
-        grouped.columns = ['ram_mean', 'ram_max']
-        grouped.reset_index()
+        grouped = grouped.reset_index()
+        grouped.columns = ['ProcessName', 'ram_mean', 'ram_max', 'cpu_mean', 'cpu_max']
 
         top_processes = grouped.sort_values(
-            by=['ram_mean', 'ram_max'],
-            ascending=[False, False]
+            by=['ram_mean', 'ram_max', 'cpu_mean', 'cpu_max'],
+            ascending=[False, False, False, False]
         ).head()
 
         return top_processes, grouped
     
 
-    def detect_issues(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
+    def detect(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
         issues = []
         if top_processes.iloc[0]['ram_mean'] > 50:
             issues.append('Single process dominates CPU')
@@ -226,7 +253,8 @@ class TopProcessesAnalitycs(ProcessAnalysisService):
         payload = {
             'top_processes': top_processes.to_dict(orient='records'),
             'system': {
-                'ram_avg': df['MemoryUsageMB'].mean().round(2)
+                'ram_avg': df['MemoryUsageMB'].mean().round(2),
+                "cpu_avg": df["CpuUsagePercent"].mean().round(2)
             },
             'issues': issues
         }
@@ -237,7 +265,7 @@ class TopProcessesAnalitycs(ProcessAnalysisService):
 
 ```json
 
-{"type": "observation", "content": {"tool": "top_processes", "result": {"top_processes": [{"ram_mean": 890.3125, "ram_max": 1004.0}, {"ram_mean": 312.7647058823529, "ram_max": 322.0}, {"ram_mean": 289.5351111111111, "ram_max": 387.0}, {"ram_mean": 211.1875, "ram_max": 265.0}, {"ram_mean": 193.94117647058823, "ram_max": 225.0}], "system": {"ram_avg": 22.74}, "issues": ["Single process dominates CPU", "Possible memory leak"]}}}
+{"type": "observation", "content": {"tool": "top_processes", "result": {"top_processes": [{"ProcessName": "devenv", "ram_mean": 912.0, "ram_max": 1013.0, "cpu_mean": 0.019375, "cpu_max": 0.62}, {"ProcessName": "ServiceHub.IntellicodeModelService", "ram_mean": 326.625, "ram_max": 504.0, "cpu_mean": 0.0, "cpu_max": 0.0}, {"ProcessName": "ServiceHub.RoslynCodeAnalysisService", "ram_mean": 311.93939393939394, "ram_max": 362.0, "cpu_mean": 0.0, "cpu_max": 0.0}, {"ProcessName": "dbeaver", "ram_mean": 290.2756804214223, "ram_max": 387.0, "cpu_mean": 0.0067954345917471464, "cpu_max": 4.62}, {"ProcessName": "ServiceHub.Host.dotnet.x64", "ram_mean": 211.0625, "ram_max": 265.0, "cpu_mean": 0.0, "cpu_max": 0.0}], "system": {"ram_avg": 23.1, "cpu_avg": 0.0}, "issues": ["Single process dominates CPU", "Possible memory leak"]}}}
 
 ```
 
@@ -268,9 +296,11 @@ Rekomendacja: zamknąć nieużywane karty przeglądarki.
 
 # Zrzuty ekranu
 
-!['Running'](image-2.png)
+!['Running'](image-5.png)
 
-!['result'](image-3.png)
+!['process'](image-6.png)
+
+!['result'](image-7.png)
 
 # Roadmap
 

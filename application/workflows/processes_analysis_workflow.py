@@ -7,12 +7,12 @@ class ProcessesAnalysisWorkflow(BaseAnalysisWorkflow):
 
     def execute(self):
         try:
-            loaded_data = self.process_analysis.load_process_data()
+            loaded_data = self.process_analysis.load_data()
             if loaded_data is None or len(loaded_data) == 0:
                 raise ValueError('No data loaded from source')
 
-            top_processes, grouped = self.process_analysis.analyze_top_processes(loaded_data)
-            detected_issues = self.process_analysis.detect_issues(
+            top_processes, grouped = self.process_analysis.analyze(loaded_data)
+            detected_issues = self.process_analysis.detect(
                 top_processes, 
                 grouped, 
                 loaded_data

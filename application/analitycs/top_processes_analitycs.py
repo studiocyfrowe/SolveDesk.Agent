@@ -1,11 +1,11 @@
 from pandas import DataFrame
-from domain.abstracts.process_analysis_service import ProcessAnalysisService
+from domain.abstracts.process_analysis_service import BaseAnalysisService
 
-class TopProcessesAnalitycs(ProcessAnalysisService):
+class TopProcessesAnalitycs(BaseAnalysisService):
     def __init__(self, loader):
         self.loader = loader
 
-    def load_process_data(self) -> DataFrame:
+    def load_data(self) -> DataFrame:
         query = """SELECT 
             MachineGuid, 
             ProcessId, 
@@ -20,23 +20,24 @@ class TopProcessesAnalitycs(ProcessAnalysisService):
         return loaded_data
     
 
-    def analyze_top_processes(self, df: DataFrame) -> DataFrame:
+    def analyze(self, df: DataFrame) -> DataFrame:
         grouped = df.groupby('ProcessName').agg({
-            "MemoryUsageMB": ['mean', 'max']
+            "MemoryUsageMB": ['mean', 'max'],
+            "CpuUsagePercent": ['mean', 'max']
         })
 
-        grouped.columns = ['ram_mean', 'ram_max']
-        grouped.reset_index()
+        grouped = grouped.reset_index()
+        grouped.columns = ['ProcessName', 'ram_mean', 'ram_max', 'cpu_mean', 'cpu_max']
 
         top_processes = grouped.sort_values(
-            by=['ram_mean', 'ram_max'],
-            ascending=[False, False]
+            by=['ram_mean', 'ram_max', 'cpu_mean', 'cpu_max'],
+            ascending=[False, False, False, False]
         ).head()
 
         return top_processes, grouped
     
 
-    def detect_issues(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
+    def detect(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
         issues = []
         if top_processes.iloc[0]['ram_mean'] > 50:
             issues.append('Single process dominates CPU')
@@ -54,7 +55,8 @@ class TopProcessesAnalitycs(ProcessAnalysisService):
         payload = {
             'top_processes': top_processes.to_dict(orient='records'),
             'system': {
-                'ram_avg': df['MemoryUsageMB'].mean().round(2)
+                'ram_avg': df['MemoryUsageMB'].mean().round(2),
+                "cpu_avg": df["CpuUsagePercent"].mean().round(2)
             },
             'issues': issues
         }
