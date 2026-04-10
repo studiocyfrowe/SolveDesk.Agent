@@ -1,3 +1,6 @@
 venv/
 .gitignore
 analyst.ipynb
+printer_data.ipynb
+ram_data.ipynb
+idea.md
