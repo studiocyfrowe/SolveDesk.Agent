@@ -15,10 +15,15 @@ class Planner:
             {problem}
 
             Dostępne narzędzia:
-
             {tools}
 
-            Zwróć plan diagnostyczny w JSON:
+            Twoim zadaniem jest:
+            1. Dokładnie opisać problem użytkownika (na podstawie podanego opisu).
+            2. Wypisać obserwowane objawy.
+            3. Nie podawaj żadnych rekomendacji ani rozwiązań.
+            4. Na końcu wskaż, które narzędzia mogą zostać użyte do dalszej diagnostyki (tylko z listy dostępnych narzędzi).
+
+            Zwróć wynik w formacie JSON:
 
             {{
                 "plan": [

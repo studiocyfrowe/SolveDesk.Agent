@@ -1,5 +1,6 @@
 from pandas import DataFrame
-from domain.abstracts.process_analysis_service import BaseAnalysisService
+from domain.abstracts.base_analysis_service import BaseAnalysisService
+from typing import Optional
 
 class TopProcessesAnalitycs(BaseAnalysisService):
     def __init__(self, loader):
@@ -37,7 +38,12 @@ class TopProcessesAnalitycs(BaseAnalysisService):
         return top_processes, grouped
     
 
-    def detect(self, top_processes: DataFrame, grouped: DataFrame, df: DataFrame) -> list[str]:
+    def detect(
+        self,
+        top_processes: Optional[DataFrame] = None,
+        grouped: Optional[DataFrame] = None,
+        df: Optional[DataFrame] = None
+    ) -> list[str]:
         issues = []
         if top_processes.iloc[0]['ram_mean'] > 50:
             issues.append('Single process dominates CPU')
@@ -51,7 +57,12 @@ class TopProcessesAnalitycs(BaseAnalysisService):
         return issues
     
 
-    def build_llm_payload(self, top_processes: DataFrame, df: DataFrame, issues: list) -> dict:
+    def build_llm_payload(
+        self,
+        top_processes: Optional[DataFrame] = None,
+        df: Optional[DataFrame] = None,
+        issues: Optional[list] = None
+    ) -> dict:
         payload = {
             'top_processes': top_processes.to_dict(orient='records'),
             'system': {
