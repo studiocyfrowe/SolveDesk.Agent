@@ -1,18 +1,24 @@
 from domain.abstracts.base_collector import BaseCollector
+import pythoncom
+import wmi
 
 class CPUCollector(BaseCollector):
-    def __init__(self, data_source):
-        self.data_source = data_source
+    def collect_data(self, hostname: str) -> list:
+        pythoncom.CoInitialize()
 
-    def collect_data(self) -> []:
-        rows = []
+        try:
+            conn = wmi.WMI(hostname)
 
-        for cpu in self.data_source.Win32_Processor():
-            rows.append({
-                "Caption": cpu.Caption,
-                "Description": cpu.Description,
-                "LoadPercentage": cpu.LoadPercentage,
-                "MaxClockSpeed": cpu.MaxClockSpeed
-            })
+            rows = []
+            for cpu in conn.Win32_Processor():
+                rows.append({
+                    "Caption": cpu.Caption,
+                    "Description": cpu.Description,
+                    "LoadPercentage": cpu.LoadPercentage,
+                    "MaxClockSpeed": cpu.MaxClockSpeed
+                })
 
-        return rows
+            return rows
+
+        finally:
+            pythoncom.CoUninitialize()

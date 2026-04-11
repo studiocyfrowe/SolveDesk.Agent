@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     return (
         <MainLayout>
             <div className="max-w-5xl mx-auto space-y-6">
-                <div className="max-w-5xl fixed bottom-4 bg-[#020617] border border-gray-800 rounded-2xl p-6 flex space-x-4 justify-between items-center">
+                <div className="max-w-5xl fixed bottom-8 bg-[#020617] border border-gray-800 rounded-2xl p-6 flex space-x-4 justify-between items-center">
                     <div>
                         <h1 className="text-lg font-semibold flex items-center gap-2">
                             <FontAwesomeIcon icon={faRobot} className="text-blue-500" />
