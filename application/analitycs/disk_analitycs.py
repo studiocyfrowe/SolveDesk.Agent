@@ -1,4 +1,5 @@
 from domain.abstracts.base_analysis_service import BaseAnalysisService
+from domain.issues.disk_issues import DiskIssuesEnum
 import pandas as pd
 from typing import Optional
 
@@ -33,25 +34,31 @@ class DiskAnalitycs(BaseAnalysisService):
     
     def detect(
         self,
-        top_processes: Optional[pd.DataFrame] = None,
-        grouped: Optional[pd.DataFrame] = None,
         df: Optional[pd.DataFrame] = None
     ) -> list[str]:
         issues = []
-        if (df.iloc[0]['max'] - df.iloc[0]['min']) > 1:
-            issues.append('There was a small increase in disk involvement')
 
-        if (df.iloc[0]['max'] - df.iloc[0]['min']) > 2.5:
-            issues.append('There was a medium increase in disk involvement')
+        if df is None or df.empty:
+            return issues
 
-        if (df.iloc[0]['max'] - df.iloc[0]['min']) > 5:
-            issues.append('There was a large increase in disk involvement')
+        df = df.copy()
+        df["diff"] = df["max"] - df["min"]
+
+        worst = df.sort_values(by="diff", ascending=False).iloc[0]
+        diff = worst["diff"]
+
+        if diff > 5:
+            issues.append(DiskIssuesEnum.HIGH_INCREASE)
+        elif diff > 2.5:
+            issues.append(DiskIssuesEnum.MEDIUM_INCREASE)
+        elif diff > 1:
+            issues.append(DiskIssuesEnum.SMALL_INCREASE)
 
         return issues
     
     def build_llm_payload(self, top_processes = None, df = None, issues = None):
         payload = {
-            "disk_csan": {
+            "disk_scan": {
                 "disk_usage_max": round(df["max"].mean(), 2),
                 "disk_usage_min": round(df["min"].max(), 2),
                 "disk_usage_mean": round(df["mean"].max(), 2)

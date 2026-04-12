@@ -7,7 +7,7 @@ class ProcessesAnalysisWorkflow(BaseAnalysisWorkflow):
 
     def execute(self):
         try:
-            loaded_data = self.process_analysis.load_data()
+            loaded_data = self.process_analysis.load_data(hostname='localhost')
             if loaded_data is None or len(loaded_data) == 0:
                 raise ValueError('No data loaded from source')
 

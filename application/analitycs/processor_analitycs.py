@@ -32,17 +32,36 @@ class ProcessorAnalitycs(BaseAnalysisService):
     
     def detect(
         self,
-        top_processes: Optional[DataFrame] = None,
-        grouped: Optional[DataFrame] = None,
-        df: Optional[DataFrame] = None
+        grouped: Optional[DataFrame] = None
     ) -> list[str]:
         issues = []
 
-        if grouped["used_percent_mean"].mean() > 80:
-            issues.append("Sustained high CPU usage across processes")
+        if grouped is None or grouped.empty:
+            return issues
 
-        if grouped["used_percent_max"].max() > 80:
-            issues.append("Single process reached very high CPU usage (possible CPU spike)")
+        mean_usage = grouped["used_percent_mean"].mean()
+        max_usage = grouped["used_percent_max"].max()
+
+        high_usage_processes = (grouped["used_percent_mean"] > 70).sum()
+        total_processes = len(grouped)
+
+        if mean_usage > 90:
+            issues.append("Critical: CPU usage is extremely high across processes")
+        elif mean_usage > 80:
+            issues.append("Warning: Sustained high CPU usage across processes")
+
+        if max_usage > 95:
+            issues.append("Critical: CPU spike detected (process near 100%)")
+        elif max_usage > 85:
+            issues.append("Warning: Single process reached high CPU usage")
+
+        if total_processes > 0:
+            ratio = high_usage_processes / total_processes
+
+            if ratio > 0.5:
+                issues.append("CPU load is distributed across many processes")
+            elif high_usage_processes == 1:
+                issues.append("CPU load concentrated in a single process")
 
         return issues
     

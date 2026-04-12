@@ -5,6 +5,8 @@ from domain.loaders.lumos_loader import LumosLoader
 from domain.loaders.wmi_loader import WmiLoader
 from domain.collectors.cpu_collector import CPUCollector
 from domain.collectors.disk_collector import DiskCollector
+from domain.collectors.ram_collector import RAMCollector
+from domain.collectors.processes_collector import ProcessesCollector
 from application.helpers.model_calling import ModelCalling
 from application.helpers.tool_registry import ToolRegistry
 from application.helpers.executor import Executor
@@ -14,7 +16,9 @@ from application.analitycs.top_processes_analitycs import TopProcessesAnalitycs
 from application.analitycs.wmi_processor import WmiProcessor
 from application.analitycs.processor_analitycs import ProcessorAnalitycs
 from application.analitycs.disk_analitycs import DiskAnalitycs
+from application.analitycs.ram_analitycs import RAMAnalitycs
 from application.workflows.disk_workflow import DiskWorkflow
+from application.workflows.ram_workflow import RAMWorkflow
 from application.workflows.diagnose_workflow import DiagnoseWorkflow
 from application.workflows.processor_workflow import ProcessorWorkflow
 from application.workflows.processes_analysis_workflow import ProcessesAnalysisWorkflow
@@ -24,6 +28,7 @@ URL = "http://localhost:11434/api/chat"
 MODEL_NAME = "qwen2.5:3b"
 
 # --- MODEL CALLING
+
 def get_model_calling():
     return ModelCalling(MODEL_NAME, URL)
 
@@ -43,7 +48,18 @@ def get_cpu_collector():
 def get_disk_collector():
     return DiskCollector()
 
+def get_ram_collector():
+    return RAMCollector()
+
+def get_processes_collector():
+    return ProcessesCollector()
+
 # --- ANALITYCS
+
+def get_ram_analitycs(
+    collector: WmiLoader = Depends(get_ram_collector)
+):
+    return RAMAnalitycs(collector=collector)
 
 def get_wmi_processor_analitycs(
     collector: WmiLoader = Depends(get_cpu_collector)
@@ -56,9 +72,9 @@ def get_disk_analitycs(
     return DiskAnalitycs(collector=collector)
 
 def get_top_processes_analitycs(
-    loader: LumosLoader = Depends(get_lumos_loader)
+    collector: WmiLoader = Depends(get_processes_collector)
 ):
-    return TopProcessesAnalitycs(loader=loader)
+    return TopProcessesAnalitycs(collector=collector)
 
 def get_processes_analitycs(
     loader: LumosLoader = Depends(get_lumos_loader)
@@ -66,6 +82,11 @@ def get_processes_analitycs(
     return ProcessorAnalitycs(loader=loader)
 
 # --- WORKFLOWS
+
+def get_ram_workflow(
+    ram_analysis: RAMAnalitycs = Depends(get_ram_analitycs)
+):
+    return RAMWorkflow(ram_analysis=ram_analysis)
 
 def get_disk_workflow(
     disk_analysis: DiskAnalitycs = Depends(get_disk_analitycs)
@@ -92,7 +113,8 @@ def get_wmi_processes_analysis_workflow(
 def get_tool_registry(
     processes_workflow: ProcessesAnalysisWorkflow = Depends(get_processes_analysis_workflow),
     wmi_processor_workflow: WMIProcessorAnalysisWorkflow = Depends(get_wmi_processes_analysis_workflow),
-    disk_workflow: DiskWorkflow = Depends(get_disk_workflow)
+    disk_workflow: DiskWorkflow = Depends(get_disk_workflow),
+    ram_workflow: RAMWorkflow = Depends(get_ram_workflow)
 ):
     registry = ToolRegistry()
 
@@ -112,6 +134,12 @@ def get_tool_registry(
         "disk_usage",
         disk_workflow.execute,
         "Show percentage usage of hard disk"
+    )
+
+    registry.register(
+        "ram_workflow",
+        ram_workflow.execute,
+        "Show percentage usage of RAM"
     )
 
     return registry
