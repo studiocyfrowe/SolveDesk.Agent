@@ -7,6 +7,7 @@ from domain.collectors.cpu_collector import CPUCollector
 from domain.collectors.disk_collector import DiskCollector
 from domain.collectors.ram_collector import RAMCollector
 from domain.collectors.processes_collector import ProcessesCollector
+from domain.collectors.event_log_collector import EventLogCollector
 from application.helpers.model_calling import ModelCalling
 from application.helpers.tool_registry import ToolRegistry
 from application.helpers.executor import Executor
@@ -53,6 +54,9 @@ def get_ram_collector():
 
 def get_processes_collector():
     return ProcessesCollector()
+
+def get_event_log_collector():
+    return EventLogCollector()
 
 # --- ANALITYCS
 
